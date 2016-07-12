@@ -1,15 +1,17 @@
 hpedockerplugin:
-  image: hpe/hpedockerplugin
-  container_name: hpeplugin
+  image: docker.hos.hpecorp.net/hpe/hpedockerplugin:v0.1
   ipc: host
   net: host
   privileged: true
   volumes:
      - /dev:/dev
-     - /home/vagrant/.ssh:/root/.ssh:ro
+     - /home/vagrant/.ssh:/root/.ssh
      - /var/run/docker/plugins:/var/run/docker/plugins
      - /var/lib/docker/:/var/lib/docker
      - /hpeplugin:/hpeplugin:shared
      - /etc/iscsi:/etc/iscsi
      - /etc/hpedockerplugin:/etc/hpedockerplugin
      - /var/run/docker.sock:/var/run/docker.sock
+     - ucp-node-certs:/root/hpedocker/python-hpedockerplugin/hpedockerplugin/ssl
+  environment:
+    - affinity:container!=quickstart_hpedockerplugin_*
